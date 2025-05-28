@@ -1,10 +1,8 @@
 class Venda:
-    def __init__(self, id, data, preco, assento, destino, id_cliente, id_reserva=None, id_onibus=None):
-        self.id = id
-        self.data = data
+    def __init__(self, codigo, destino, preco, assento, onibus):
+        self.codigo = codigo
+        self.destino = destino
         self.preco = preco
         self.assento = assento
-        self.destino = destino
-        self.id_cliente = id_cliente
-        self.id_reserva = id_reserva
-        self.id_onibus = id_onibus
+        self.onibus = onibus
+        onibus.adicionar_venda(self)

@@ -1,9 +1,11 @@
-from abc import abstractclassmethod
-
-class Onibus(abc):
-    def __init__(self, codigo, origem, placa, locadoura, assentos):
+class Onibus:
+    def __init__(self, codigo, origem, placa, locadora, assentos):
         self.codigo = codigo
         self.origem = origem
         self.placa = placa
-        self.locadoura = locadoura
+        self.locadora = locadora
         self.assentos = assentos
+        self.vendas = []  # vendas associadas
+
+    def adicionar_venda(self, venda):
+        self.vendas.append(venda)
