@@ -15,7 +15,7 @@ cursor.execute(
         id_cliente INTEGER NOT NULL,
         id_reserva INTEGER NOT NULL,
         FOREIGN KEY (id_onibus) REFERENCES onibus(id),
-        FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+        FOREIGN KEY (id_cliente) REFERENCES cliente(id),
         FOREIGN KEY (id_reserva) REFERENCES reserva(id)
         );
 """
