@@ -1,6 +1,6 @@
 from abc import abstractclassmethod
 
-class Cliente(ABC):
+class Cliente:
     def __init__(self, codigo, nome, telefone, nascimento, cpf, cnpg, endereco):
         self.codigo = codigo
         self.nome = nome
