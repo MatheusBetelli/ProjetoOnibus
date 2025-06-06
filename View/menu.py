@@ -1,6 +1,6 @@
 import streamlit as st
-from Model.Cliente import Cliente
 from Model.Onibus import Onibus
+from Model.Cliente import Cliente
 from Model.Reserva import Reserva
 from Model.Venda import Venda
 from Controller.ClienteController import criar_cliente, listar_clientes
