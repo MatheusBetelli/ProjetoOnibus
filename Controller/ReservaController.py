@@ -1,22 +1,34 @@
 from Model.Reserva import Reserva
 import sqlite3
+from Service.database import conectar
 
 def criar_reserva(reserva: Reserva):
-    conexao = sqlite3.connect("Rodoviaria.db")
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("""
         INSERT INTO reserva (id, data, id_venda, id_cliente, preco, assento, origem, destino)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-        (reserva.codigo, reserva.data, reserva.id_venda, reserva.id_cliente,
+        (reserva.id, reserva.data, reserva.id_venda, reserva.id_cliente,
          reserva.preco, reserva.assento, reserva.origem, reserva.destino)
     )
     conexao.commit()
     conexao.close()
 
 def listar_reservas():
-    conexao = sqlite3.connect("Rodoviaria.db")
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("SELECT * FROM reserva")
     resultado = cursor.fetchall()
     conexao.close()
     return resultado
+
+def buscar_reserva(id_reserva):
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("SELECT * FROM reserva WHERE id = ?", (id_reserva,))
+    resultado = cursor.fetchone()
+    conexao.close()
+    if resultado:
+        return Reserva(*resultado)
+    else:
+        return None
