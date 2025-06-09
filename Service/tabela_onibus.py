@@ -7,7 +7,7 @@ cursor = conexao.cursor()
 cursor.execute(
     """
         CREATE TABLE onibus (
-        id INTEGER PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         origem TEXT NOT NULL,
         placa TEXT NOT NULL,
         nome_locadoura TEXT NOT NULL,

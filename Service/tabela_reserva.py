@@ -7,7 +7,7 @@ cursor = conexao.cursor()
 cursor.execute(
     """
         CREATE TABLE reserva (
-        id INTEGER PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         data DATE NOT NULL,
         id_venda INTEGER NOT NULL,
         id_cliente INTEGER NOT NULL,

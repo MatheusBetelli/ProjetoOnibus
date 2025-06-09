@@ -7,7 +7,7 @@ cursor = conexao.cursor()
 cursor.execute(
     """
         CREATE TABLE venda (
-        id INTEGER PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         preco REAL NOT NULL,
         assento INTEGER NOT NULL,
         id_onibus INTEGER NOT NULL,

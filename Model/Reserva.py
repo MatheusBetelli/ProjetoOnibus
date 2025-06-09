@@ -1,6 +1,6 @@
 class Reserva:
-    def __init__(self, codigo, data, preco, assento, origem, destino, id_cliente, id_venda=None):
-        self.codigo = codigo
+    def __init__(self, id, data, preco, assento, origem, destino, id_cliente, id_venda=None):
+        self.id = id
         self.data = data
         self.preco = preco
         self.assento = assento

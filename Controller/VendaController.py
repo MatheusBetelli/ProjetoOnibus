@@ -1,19 +1,20 @@
 from Model.Venda import Venda
 import sqlite3
+from Service.database import conectar
 
 def criar_venda(venda: Venda):
-    conexao = sqlite3.connect("Rodoviaria.db")
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("""
         INSERT INTO venda (id, preco, assento, id_onibus, destino, id_cliente, id_reserva)
         VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (venda.codigo, venda.preco, venda.assento, venda.onibus.codigo, venda.destino, venda.onibus.vendas[-1].id_cliente, venda.onibus.vendas[-1].codigo)
+        (venda.id, venda.preco, venda.assento, venda.onibus.id, venda.destino, venda.cliente.id, venda.reserva.id)
     )
     conexao.commit()
     conexao.close()
 
 def listar_vendas():
-    conexao = sqlite3.connect("Rodoviaria.db")
+    conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("SELECT * FROM venda")
     resultado = cursor.fetchall()
