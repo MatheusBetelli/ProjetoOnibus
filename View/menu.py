@@ -1,11 +1,18 @@
+import sys
+import os
+
+# Adiciona o diretório raiz do projeto ao caminho de importação
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(_file_), '..')))
+
+
 import streamlit as st
-from Model.Onibus import Onibus
 from Model.Cliente import Cliente
+from Model.Onibus import Onibus
 from Model.Reserva import Reserva
 from Model.Venda import Venda
-from Controller.ClienteController import criar_cliente, listar_clientes
-from Controller.OnibusController import criar_onibus, listar_onibus
-from Controller.ReservaController import criar_reserva, listar_reservas
+from Controller.ClienteController import criar_cliente, listar_clientes, buscar_cliente_por_id
+from Controller.OnibusController import criar_onibus, listar_onibus, buscar_onibus_id
+from Controller.ReservaController import criar_reserva, listar_reservas, buscar_reserva
 from Controller.VendaController import criar_venda, listar_vendas
 
 st.title("Rodoviária - Sistema de Passagens")
@@ -75,14 +82,21 @@ elif menu == "Vendas":
     id_cliente = st.number_input("ID Cliente", step=1)
     id_reserva = st.number_input("ID Reserva", step=1)
     if st.button("Registrar Venda"):
-        # Aqui criamos um objeto de venda simulando um ônibus com os dados mínimos
-        onibus_fake = Onibus(id_onibus, "", "", "", 50)
-        reserva_fake = Reserva(id_reserva, "", preco, assento, "", destino, id_cliente)
-        onibus_fake.adicionar_venda(reserva_fake)
-        venda = Venda(codigo, destino, preco, assento, onibus_fake)
-        criar_venda(venda)
-        st.success("Venda registrada com sucesso!")
+        cliente = buscar_cliente_por_id(id_cliente)
+        onibus = buscar_onibus_id(id_onibus)
+        reserva = buscar_reserva(id_reserva)
 
-    st.subheader("Lista de Vendas")
-    for v in listar_vendas():
-        st.text(v)
+        if cliente is None:
+            st.error("Cliente não encontrado com esse ID.")
+        elif onibus is None:
+            st.error("Ônibus não encontrado com esse ID.")
+        elif reserva is None:
+            st.error("Reserva não encontrada com esse ID.")
+        else:
+            venda = Venda(codigo, destino, preco, assento, onibus, cliente, reserva)
+            criar_venda(venda)
+            st.success("Venda registrada com sucesso!")
+
+            st.subheader("Lista de Vendas")
+            for v in listar_vendas():
+                st.text(v)

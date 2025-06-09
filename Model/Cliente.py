@@ -1,11 +1,11 @@
 class Cliente:
-    def __init__(self, codigo, nome, telefone, nascimento, cpf, cnpg, endereco):
-        self.codigo = codigo
+    def _init_(self, id, nome, telefone, nascimento, cpf, cnpj, endereco):
+        self.id = id
         self.nome = nome
         self.telefone = telefone
         self.nascimento = nascimento
         self.cpf = cpf
-        self.cnpg = cnpg
+        self.cnpj = cnpj
         self.endereco = endereco
 
     def get_codigo(self):

@@ -1,13 +1,12 @@
-import sqlite3
+from database import conectar
 
-conexao = sqlite3.connect("Rodoviaria.db")
-
+conexao = conectar()
 cursor = conexao.cursor()
 
 cursor.execute(
     """
         CREATE TABLE reserva (
-        id INTEGER PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
         data DATE NOT NULL,
         id_venda INTEGER NOT NULL,
         id_cliente INTEGER NOT NULL,
@@ -21,6 +20,7 @@ cursor.execute(
 """
 )
 
-
+conexao.commit()
 cursor.close()
+conexao.close()
 print("Tabela Reserva funcionando")

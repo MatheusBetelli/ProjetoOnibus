@@ -1,13 +1,12 @@
-import sqlite3
+from database import conectar
 
-conexao = sqlite3.connect("Rodoviaria.db")
-
+conexao = conectar()
 cursor = conexao.cursor()
 
 cursor.execute(
     """
         CREATE TABLE onibus (
-        id INTEGER PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT,
         origem TEXT NOT NULL,
         placa TEXT NOT NULL,
         nome_locadoura TEXT NOT NULL,
@@ -16,5 +15,7 @@ cursor.execute(
 """
 )
 
+conexao.commit()
 cursor.close()
+conexao.close()
 print("Tabela Onibus funcionando")
