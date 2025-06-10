@@ -1,7 +1,7 @@
 from Model.Reserva import Reserva
 
 class Onibus:
-    def __init__(self, id, origem, placa, nome_locadoura, qtn_assento):
+    def __init__(self, origem, placa, nome_locadoura, qtn_assento, id=None):
         self.id = id
         self.origem = origem
         self.placa = placa

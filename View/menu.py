@@ -58,12 +58,23 @@ elif menu == "Reservas":
     assento = st.number_input("Assento", step=1)
     origem = st.text_input("Origem")
     destino = st.text_input("Destino")
+    id_onibus = st.number_input("ID do Onibus", step=1)
     id_cliente = st.number_input("ID do Cliente", step=1)
     id_venda = st.number_input("ID da Venda", step=1)
+
     if st.button("Reservar"):
-        reserva = Reserva(data=str(data), preco=preco, assento=assento, origem=origem, destino=destino, id_cliente=id_cliente, id_venda=id_venda)
-        criar_reserva(reserva)
-        st.success("Reserva realizada com sucesso!")
+        cliente = buscar_cliente_por_id(id_cliente)
+        onibus = buscar_onibus_id(id_onibus)
+
+        if cliente is None:
+            st.error("Cliente não encontrado com esse ID.")
+        elif onibus is None:
+            st.error("Ônibus não encontrado com esse ID.")
+        
+        else:
+            reserva = Reserva(data=str(data), preco=preco, assento=assento, origem=origem, destino=destino, id_cliente=id_cliente, id_onibus=id_onibus, id_venda=id_venda)
+            criar_reserva(reserva)
+            st.success("Reserva realizada com sucesso!")
 
     st.subheader("Lista de Reservas")
     for r in listar_reservas():
