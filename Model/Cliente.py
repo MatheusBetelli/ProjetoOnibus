@@ -1,6 +1,4 @@
 class Cliente:
-    def _init_(self, id, nome, telefone, nascimento, cpf, cnpj, endereco):
-        self.id = id
     def __init__(self, id, nome, telefone, nascimento, cpf, cnpj, endereco):
         self.id = id
         self.nome = nome
