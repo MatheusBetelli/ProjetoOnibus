@@ -1,7 +1,6 @@
-import sqlite3
+from database import conectar
 
-conexao = sqlite3.connect("Rodoviaria.db")
-
+conexao = conectar()
 cursor = conexao.cursor()
 
 cursor.execute(
@@ -16,5 +15,7 @@ cursor.execute(
 """
 )
 
+conexao.commit()
 cursor.close()
+conexao.close()
 print("Tabela Onibus funcionando")
