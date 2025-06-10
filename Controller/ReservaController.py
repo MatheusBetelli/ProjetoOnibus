@@ -32,3 +32,11 @@ def buscar_reserva(id_reserva):
         return Reserva(*resultado)
     else:
         return None
+    
+def buscar_assentos_reservados(id_onibus):
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("SELECT assento FROM reserva WHERE id_onibus = ?", (id_onibus,))
+    assentos = [row[0] for row in cursor.fetchall()]
+    conexao.close()
+    return assentos

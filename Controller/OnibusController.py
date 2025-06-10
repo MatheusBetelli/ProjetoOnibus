@@ -1,6 +1,7 @@
 from Model.Onibus import Onibus
 import sqlite3
 from Service.database import conectar
+from Controller.VendaController import listar_vendas, buscar_assentos_ocupados
 
 def criar_onibus(onibus: Onibus):
     conexao = conectar()
@@ -29,6 +30,9 @@ def buscar_onibus_id(id_onibus):
     conexao.close()
 
     if resultado:
-        return Onibus(*resultado)
+        id, origem, placa, nome_locadoura, qtn_assento = resultado
+        onibus = Onibus(origem, placa, nome_locadoura, qtn_assento, id=id)
+        onibus.vendas = buscar_assentos_ocupados(id)
+        return onibus
     else:
         return None

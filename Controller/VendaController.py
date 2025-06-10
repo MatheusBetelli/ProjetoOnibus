@@ -20,3 +20,11 @@ def listar_vendas():
     resultado = cursor.fetchall()
     conexao.close()
     return resultado
+
+def buscar_assentos_ocupados(id_onibus):
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("SELECT assento FROM venda WHERE id_onibus = ?", (id_onibus,))
+    assentos = [row[0] for row in cursor.fetchall()]
+    conexao.close()
+    return assentos
