@@ -6,9 +6,9 @@ def criar_venda(venda: Venda):
     conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("""
-        INSERT INTO venda (id, preco, assento, id_onibus, destino, id_cliente, id_reserva)
-        VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (venda.id, venda.preco, venda.assento, venda.onibus.id, venda.destino, venda.cliente.id, venda.reserva.id)
+        INSERT INTO venda (preco, assento, id_onibus, destino, id_cliente, id_reserva)
+        VALUES (?, ?, ?, ?, ?, ?)""",
+        (venda.preco, venda.assento, venda.onibus.id, venda.destino, venda.cliente.id, venda.reserva.id)
     )
     conexao.commit()
     conexao.close()

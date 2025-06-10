@@ -9,9 +9,9 @@ def criar_cliente(cliente: Cliente):
     conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("""
-        INSERT INTO cliente (id, cpf, cnpj, nome, endereco, nascimento, telefone)
-        VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (cliente.id, cliente.cpf, cliente.cnpj, cliente.nome, cliente.endereco, cliente.nascimento, cliente.telefone)
+        INSERT INTO cliente (cpf, cnpj, nome, endereco, nascimento, telefone)
+        VALUES (?, ?, ?, ?, ?, ?)""",
+        (cliente.cpf, cliente.cnpj, cliente.nome, cliente.endereco, cliente.nascimento, cliente.telefone)
     )
     conexao.commit()
     conexao.close()

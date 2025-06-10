@@ -21,7 +21,6 @@ menu = st.sidebar.selectbox("Menu", ["Clientes", "Ônibus", "Reservas", "Vendas"
 
 if menu == "Clientes":
     st.header("Cadastro de Cliente")
-    codigo = st.number_input("Código", step=1)
     nome = st.text_input("Nome")
     telefone = st.text_input("Telefone")
     nascimento = st.date_input("Data de Nascimento")
@@ -29,7 +28,7 @@ if menu == "Clientes":
     cnpj = st.text_input("CNPJ")
     endereco = st.text_input("Endereço")
     if st.button("Cadastrar Cliente"):
-        cliente = Cliente(codigo, nome, telefone, str(nascimento), cpf, cnpj, endereco)
+        cliente = Cliente(nome=nome, telefone=telefone, nascimento=str(nascimento), cpf=cpf, cnpj=cnpj, endereco=endereco)
         criar_cliente(cliente)
         st.success("Cliente cadastrado com sucesso!")
 
@@ -39,13 +38,12 @@ if menu == "Clientes":
 
 elif menu == "Ônibus":
     st.header("Cadastro de Ônibus")
-    codigo = st.number_input("Código", step=1)
     origem = st.text_input("Origem")
     placa = st.text_input("Placa")
     locadora = st.text_input("Locadora")
     assentos = st.number_input("Qtde Assentos", min_value=1, step=1)
     if st.button("Cadastrar Ônibus"):
-        onibus = Onibus(codigo, origem, placa, locadora, assentos)
+        onibus = Onibus(origem=origem, placa=placa, nome_locadoura=locadora, qtn_assento=assentos)
         criar_onibus(onibus)
         st.success("Ônibus cadastrado com sucesso!")
 
@@ -55,7 +53,6 @@ elif menu == "Ônibus":
 
 elif menu == "Reservas":
     st.header("Reserva de Passagem")
-    codigo = st.number_input("Código da Reserva", step=1)
     data = st.date_input("Data da Viagem")
     preco = st.number_input("Preço")
     assento = st.number_input("Assento", step=1)
@@ -64,7 +61,7 @@ elif menu == "Reservas":
     id_cliente = st.number_input("ID do Cliente", step=1)
     id_venda = st.number_input("ID da Venda", step=1)
     if st.button("Reservar"):
-        reserva = Reserva(codigo, str(data), preco, assento, origem, destino, id_cliente, id_venda)
+        reserva = Reserva(data=str(data), preco=preco, assento=assento, origem=origem, destino=destino, id_cliente=id_cliente, id_venda=id_venda)
         criar_reserva(reserva)
         st.success("Reserva realizada com sucesso!")
 
@@ -74,7 +71,6 @@ elif menu == "Reservas":
 
 elif menu == "Vendas":
     st.header("Venda de Passagem")
-    codigo = st.number_input("Código da Venda", step=1)
     preco = st.number_input("Preço da Venda")
     assento = st.number_input("Assento", step=1)
     id_onibus = st.number_input("ID Ônibus", step=1)
@@ -93,7 +89,7 @@ elif menu == "Vendas":
         elif reserva is None:
             st.error("Reserva não encontrada com esse ID.")
         else:
-            venda = Venda(codigo, destino, preco, assento, onibus, cliente, reserva)
+            venda = Venda(destino=destino, preco=preco, assento=assento, onibus=onibus, cliente=cliente, reserva=reserva)
             criar_venda(venda)
             st.success("Venda registrada com sucesso!")
 

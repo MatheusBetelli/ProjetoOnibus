@@ -6,9 +6,9 @@ def criar_onibus(onibus: Onibus):
     conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("""
-        INSERT INTO onibus (id, origem, placa, nome_locadoura, qtn_assento)
-        VALUES (?, ?, ?, ?, ?)""",
-        (onibus.id, onibus.origem, onibus.placa, onibus.nome_locadoura, onibus.qtn_assento)
+        INSERT INTO onibus ( origem, placa, nome_locadoura, qtn_assento)
+        VALUES (?, ?, ?, ?)""",
+        (onibus.origem, onibus.placa, onibus.nome_locadoura, onibus.qtn_assento)
     )
     conexao.commit()
     conexao.close()

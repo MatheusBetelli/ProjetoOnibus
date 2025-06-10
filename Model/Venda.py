@@ -3,7 +3,7 @@
 # from Model.Reserva import Reserva
 
 class Venda:
-    def __init__(self, id, destino, preco, assento, onibus, cliente, reserva):
+    def __init__(self, destino, preco, assento, onibus, cliente, reserva, id=None):
         self.id = id
         self.destino = destino
         self.preco = preco

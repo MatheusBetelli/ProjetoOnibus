@@ -6,9 +6,9 @@ def criar_reserva(reserva: Reserva):
     conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute("""
-        INSERT INTO reserva (id, data, id_venda, id_cliente, preco, assento, origem, destino)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-        (reserva.id, reserva.data, reserva.id_venda, reserva.id_cliente,
+        INSERT INTO reserva (data, id_venda, id_cliente, preco, assento, origem, destino)
+        VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (reserva.data, reserva.id_venda, reserva.id_cliente,
          reserva.preco, reserva.assento, reserva.origem, reserva.destino)
     )
     conexao.commit()
