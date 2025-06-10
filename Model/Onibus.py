@@ -1,7 +1,7 @@
-# from Model.Reserva import Reserva
+from Model.Reserva import Reserva
 
 class Onibus:
-    def __init__(self, origem, placa, nome_locadoura, qtn_assento, id=None):
+    def __init__(self, id, origem, placa, nome_locadoura, qtn_assento):
         self.id = id
         self.origem = origem
         self.placa = placa
@@ -14,18 +14,17 @@ class Onibus:
         return len(self.vendas)
 
     def verificar_assentos_disponiveis(self):
-        # Retorna o número de assentos disponíveis
-        return self.qtn_assento - self.numero_vendas()
-
+        # Retorna a lista de assentos disponíveis
+        assentos_ocupados = {venda.assento for venda in self.vendas}
+        return [i for i in range(1, self.qtn_assento + 1) if i not in assentos_ocupados]
 
     def adicionar_venda(self, venda):
-        # Verifica se o assento da reserva já foi ocupado
-        if self.numero_vendas() < self.qtn_assento:
-            # Verifica se o assento já foi reservado (evitar duplicidade)
-            if any(venda.assento == venda.assento for venda in self.vendas):
-                print(f"Assento {venda.assento} já está ocupado.")
-            else:
-                self.vendas.append(venda)
-                print(f"Venda adicionada para o assento {venda.assento}.")
-        else:
-            print("Não há assentos suficientes no ônibus para essa venda.")
+        assentos_disponiveis = self.verificar_assentos_disponiveis()
+
+        if venda.assento not in assentos_disponiveis:
+            print(f"Assento {venda.assento} já está ocupado ou é inválido.")
+            return False
+
+        self.vendas.append(venda)
+        print(f"Venda adicionada com sucesso para o assento {venda.assento}.")
+        return True

@@ -77,6 +77,7 @@ elif menu == "Vendas":
     destino = st.text_input("Destino")
     id_cliente = st.number_input("ID Cliente", step=1)
     id_reserva = st.number_input("ID Reserva", step=1)
+
     if st.button("Registrar Venda"):
         cliente = buscar_cliente_por_id(id_cliente)
         onibus = buscar_onibus_id(id_onibus)
@@ -90,9 +91,8 @@ elif menu == "Vendas":
             st.error("Reserva não encontrada com esse ID.")
         else:
             venda = Venda(destino=destino, preco=preco, assento=assento, onibus=onibus, cliente=cliente, reserva=reserva)
-            criar_venda(venda)
-            st.success("Venda registrada com sucesso!")
-
-            st.subheader("Lista de Vendas")
-            for v in listar_vendas():
-                st.text(v)
+            if venda.registrar_venda():
+                criar_venda(venda)
+                st.success("Venda registrada com sucesso!")
+            else:
+                st.error(f"Assento {assento} já está ocupado ou é inválido.")
