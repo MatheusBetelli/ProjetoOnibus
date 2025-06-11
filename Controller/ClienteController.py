@@ -32,6 +32,9 @@ def buscar_cliente_por_id(id_cliente):
     conexao.close()
 
     if resultado:
-        return Cliente(*resultado)
+        id, cpf, cnpj, nome, endereco, nascimento, telefone = resultado
+        cliente = Cliente(cpf=cpf, cnpj=cnpj, nome=nome, endereco=endereco, nascimento=nascimento, telefone=telefone)
+        cliente.id = id  # Atribui o ID manualmente
+        return cliente
     else:
         return None

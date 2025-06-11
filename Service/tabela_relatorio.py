@@ -26,8 +26,31 @@ def gerar_relatorio(tipo):
         df = pd.read_sql_query(query, conexao)
         conexao.close()
         return df
-                       
-        
+
+    elif tipo == "Cliente que mais comprou":
+        query = """
+        SELECT c.id AS cliente_id, c.nome AS nome_cliente,
+        COALESCE(v.total_venda, 0) + COALESCE(r.total_reserva, 0) AS Preco_investido
+        FROM cliente c
+        LEFT JOIN (
+            SELECT id_cliente, SUM(preco) AS total_venda
+            FROM venda
+            GROUP BY id_cliente
+        ) v ON v.id_cliente = c.id
+        LEFT JOIN (
+            SELECT id_cliente, SUM(preco) AS total_reserva
+            FROM reserva
+            GROUP BY id_cliente
+        ) r ON r.id_cliente = c.id
+        ORDER BY Preco_investido DESC;
+
+"""    
+        df = pd.read_sql_query(query, conexao)
+        conexao.close()
+        return df
+    
+
+
     else:
         conexao.close()
         return pd.DataFrame()

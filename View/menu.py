@@ -34,8 +34,8 @@ if menu == "Clientes":
         st.success("Cliente cadastrado com sucesso!")
 
     st.subheader("Lista de Clientes")
-    # for cliente in listar_clientes():
-    #     st.text(cliente)
+    for cliente in listar_clientes():
+        st.text(cliente)
 
 elif menu == "Ônibus":
     st.header("Cadastro de Ônibus")
@@ -49,8 +49,8 @@ elif menu == "Ônibus":
         st.success("Ônibus cadastrado com sucesso!")
 
     st.subheader("Lista de Ônibus")
-    # for o in listar_onibus():
-    #     st.text(o)
+    for o in listar_onibus():
+        st.text(o)
 
 elif menu == "Reservas":
     st.header("Reserva de Passagem")
@@ -61,7 +61,6 @@ elif menu == "Reservas":
     destino = st.text_input("Destino")
     id_onibus = st.number_input("ID do Onibus", step=1)
     id_cliente = st.number_input("ID do Cliente", step=1)
-    id_venda = st.number_input("ID da Venda", step=1)
 
     if st.button("Reservar"):
         cliente = buscar_cliente_por_id(id_cliente)
@@ -84,7 +83,7 @@ elif menu == "Reservas":
                 st.error(f"O assento {assento} não existe nesse ônibus.")
             else:
                 reserva = Reserva(
-                    data=str(data), preco=preco, assento=assento, origem=origem, destino=destino, id_cliente=id_cliente, id_onibus=id_onibus, id_venda=id_venda
+                    data=str(data), preco=preco, assento=assento, origem=origem, destino=destino, id_cliente=id_cliente, id_onibus=id_onibus
                 )
                 criar_reserva(reserva)
                 st.success("Reserva realizada com sucesso!")
@@ -110,7 +109,7 @@ elif menu == "Vendas":
         elif reserva is None:
             st.error("Reserva não encontrada com esse ID.")
         else:
-            venda = Venda(destino=destino, preco=preco, assento=assento, onibus=onibus, cliente=cliente, reserva=reserva)
+            venda = Venda(preco=preco, assento=assento, onibus=onibus, destino=destino, cliente=cliente, reserva=reserva)
             if venda.registrar_venda():
                 criar_venda(venda)
                 st.success("Venda registrada com sucesso!")
@@ -120,7 +119,7 @@ elif menu == "Vendas":
 elif menu == "Relatórios":
     st.header("Relatórios do Sistema de Ônibus")
 
-    opcoes = ["Reservas com Cliente e Ônibus", "Vendas Com Clientes e Reserva"]
+    opcoes = ["Reservas com Cliente e Ônibus", "Vendas Com Clientes e Reserva", "Cliente que mais comprou"]
     escolha = st.selectbox("Escolha qual Relatório ver ", opcoes)
 
     if escolha:
