@@ -15,10 +15,11 @@ from Controller.OnibusController import criar_onibus, listar_onibus, buscar_onib
 from Controller.ReservaController import criar_reserva, listar_reservas, buscar_reserva, buscar_assentos_reservados
 from Controller.VendaController import criar_venda, buscar_assentos_ocupados
 from Service.tabela_relatorio import gerar_relatorio
+from Service.operacoes import mostrar_tabela, atualizar_valor, deletar_por_id, selecionar_id
 
 st.title("Rodoviária - Sistema de Passagens")
 
-menu = st.sidebar.selectbox("Menu", ["Clientes", "Ônibus", "Reservas", "Vendas", "Relatórios"])
+menu = st.sidebar.selectbox("Menu", ["Clientes", "Ônibus", "Reservas", "Vendas", "Relatórios", "Tabelas", "Operações CRUD"])
 
 if menu == "Clientes":
     st.header("Cadastro de Cliente")
@@ -131,4 +132,49 @@ elif menu == "Relatórios":
         else:
             st.info("Nenhum dado encontrado para esse relatório.")
 
+elif menu == "Tabelas":
+    st.header("Tabelas do Sistema de Ônibus")
 
+    opcoes = ["Cliente", "Onibus", "Reserva", "Venda"]
+    escolha = st.selectbox("Escolha qual Tabela ver ", opcoes)
+
+    if escolha:
+        df = mostrar_tabela(escolha)
+
+        if not df.empty:
+            st.subheader(f"Tabelas: {escolha}")
+            st.dataframe(df)
+        else:
+            st.info("Nenhum dado encontrado para esse relatório.")
+
+elif menu == "Operações CRUD":
+    st.header("Visualizar e Alterar Dados")
+    
+    tabela = st.selectbox("Escolha a Tabela", ["cliente", "Onibus", "reserva", "venda"])
+
+    df = mostrar_tabela(tabela)
+    st.dataframe(df)
+
+    st.subheader("Atualizar Registro")
+    id_alvo = st.number_input("ID do Registro", step=1)
+    campo = st.text_input("Campo para atualizar (ex: nome, preco)")
+    novo_valor = st.text_input("Novo valor")
+
+    if st.button("Atualizar"):
+        if selecionar_id(tabela, id_alvo):
+            atualizar_valor(tabela, campo, novo_valor, id_alvo)
+            st.success("Atualizado com sucesso!")
+        
+        else:
+            st.error("Id inválido ou não existe")
+
+
+    st.subheader("Deletar Registro")
+    id_deletar = st.number_input("ID para deletar", step=1, key="delete_id")
+    if st.button("Deletar"):
+        if selecionar_id(tabela, id_deletar):
+            deletar_por_id(tabela, id_deletar)
+            st.success("Registro deletado com sucesso!")
+
+        else:
+            st.error("Id inválido ou não existe")
