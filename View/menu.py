@@ -120,7 +120,7 @@ elif menu == "Vendas":
 elif menu == "Relatórios":
     st.header("Relatórios do Sistema de Ônibus")
 
-    opcoes = ["Reservas com Cliente e Ônibus"]
+    opcoes = ["Reservas com Cliente e Ônibus", "Vendas Com Clientes e Reserva"]
     escolha = st.selectbox("Escolha qual Relatório ver ", opcoes)
 
     if escolha:
