@@ -149,41 +149,41 @@ elif menu == "Tabelas":
 
 elif menu == "Operações CRUD":
     st.header("Visualizar e Alterar Dados")
-    
-    tabela = st.selectbox("Escolha a Tabela", ["cliente", "Onibus", "reserva", "venda"])
 
-    df = mostrar_tabela(tabela)
+    tabela = st.selectbox("Escolha a Tabela", ["cliente", "onibus", "reserva", "venda"])
+    tabela_lower = tabela.lower()
+
+    df = mostrar_tabela(tabela_lower)
     st.dataframe(df)
 
     st.subheader("Atualizar Registro")
-id_alvo = st.number_input("ID do Registro", step=1)
-campos = {
-    "cliente": ["nome", "telefone", "nascimento", "cpf", "cnpj", "endereco"],
-    "onibus": ["origem", "placa", "nome_locadoura", "qtn_assento"],
-    "reserva": ["data", "preco", "assento", "origem", "destino", "id_cliente", "id_onibus"],
-    "venda": ["preco", "assento", "id_onibus", "destino", "id_cliente", "id_reserva"]
-}
+    id_alvo = st.number_input("ID do Registro", step=1)
 
-# Corrige a chave do selectbox comparando em minúsculas
-tabela_lower = tabela.lower()
+    campos = {
+        "cliente": ["nome", "telefone", "nascimento", "cpf", "cnpj", "endereco"],
+        "onibus": ["origem", "placa", "nome_locadoura", "qtn_assento"],
+        "reserva": ["data", "preco", "assento", "origem", "destino", "id_cliente", "id_onibus"],
+        "venda": ["preco", "assento", "id_onibus", "destino", "id_cliente", "id_reserva"]
+    }
 
-if tabela_lower in campos:
-    campo = st.selectbox("Campo a ser atualizado", campos[tabela_lower], key=f"campo_select_{tabela_lower}")
-    novo_valor = st.text_input("Novo valor", key=f"novo_valor_{campo}")
+    if tabela_lower in campos:
+        campo = st.selectbox("Campo a ser atualizado", campos[tabela_lower], key=f"campo_select_{tabela_lower}")
+        novo_valor = st.text_input("Novo valor", key=f"novo_valor_{campo}")
 
-    if st.button("Atualizar", key=f"btn_atualizar_{tabela_lower}_{campo}"):
-        if selecionar_id(tabela, id_alvo):
-            atualizar_valor(tabela, campo, novo_valor, id_alvo)
-            st.success(f"{campo} atualizado com sucesso!")
-        else:
-            st.error("ID inválido ou não existe")
-        
+        if st.button("Atualizar", key=f"btn_atualizar_{tabela_lower}_{campo}"):
+            if selecionar_id(tabela_lower, id_alvo):
+                atualizar_valor(tabela_lower, campo, novo_valor, id_alvo)
+                st.success(f"{campo} atualizado com sucesso!")
+            else:
+                st.error("ID inválido ou não existe")
+
+    # <- Fora do IF, aparece sempre
     st.subheader("Deletar Registro")
     id_deletar = st.number_input("ID para deletar", step=1, key="delete_id")
-    if st.button("Deletar"):
-        if selecionar_id(tabela, id_deletar):
-            deletar_por_id(tabela, id_deletar)
-            st.success("Registro deletado com sucesso!")
 
+    if st.button("Deletar", key=f"btn_deletar_{tabela_lower}"):
+        if selecionar_id(tabela_lower, id_deletar):
+            deletar_por_id(tabela_lower, id_deletar)
+            st.success("Registro deletado com sucesso!")
         else:
-            st.error("Id inválido ou não existe")
+            st.error("ID inválido ou não existe")
